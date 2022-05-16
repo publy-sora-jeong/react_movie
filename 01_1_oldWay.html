@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="root"></div>
+	</body>
+	<script
+		crossorigin
+		src="https://unpkg.com/react@18/umd/react.production.min.js"
+	></script>
+	<script
+		crossorigin
+		src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+	></script>
+
+	<script>
+		const root = document.getElementById('root')
+		const span = React.createElement(
+			'h3',
+			{ id: 'title', style: { color: 'red' } },
+			"Hello I'm span"
+		)
+		const button = React.createElement(
+			'button',
+			{
+				onClick: () => {
+					console.log('I am clicked')
+				},
+				onMouseEnter: () => {
+					console.log('I am entered')
+				},
+			},
+			'CLICK ME'
+		)
+		const container = React.createElement('div', null, [span, button])
+		ReactDOM.render(container, root)
+	</script>
+</html>

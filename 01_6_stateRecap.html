@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="root"></div>
+	</body>
+
+	<script
+		crossorigin
+		src="https://unpkg.com/react@18/umd/react.production.min.js"
+	></script>
+	<script
+		crossorigin
+		src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+	></script>
+	<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+		body {
+			letter-spacing: -0.02em;
+		}
+		.converter {
+			max-width: 400px;
+			margin-top: 30px;
+		}
+		label {
+			display: block;
+			text-transform: uppercase;
+			padding-bottom: 5px;
+			margin-top: 20px;
+			color: #999;
+		}
+		input {
+			border: 1px solid #ddd;
+			height: 50px;
+			line-height: 50px;
+			padding-left: 16px;
+			width: 100%;
+			border-radius: 4px;
+			appearance: none;
+		}
+		input::disabled {
+			background: #ddd;
+		}
+		input[type='number']::-webkit-inner-spin-button,
+		input[type='number']::-webkit-outer-spin-button {
+			appearance: none;
+		}
+		select {
+			width: 100%;
+			height: 50px;
+			line-height: 50px;
+			padding-left: 16px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			background: rgb(107, 107, 107);
+			color: #fff;
+		}
+		.userBtn {
+			width: 100%;
+			margin-top: 20px;
+			border: 1px solid orange;
+			background: orange;
+			color: white;
+			height: 50px;
+			line-height: 50px;
+			border-radius: 4px;
+		}
+		.userBtnWrap {
+			display: flex;
+			justify-content: space-between;
+		}
+		.userBtnWrap .userBtn {
+			width: 49%;
+		}
+	</style>
+	<script type="text/babel">
+		function MinutesToHours() {
+			const [amount, setAmount] = React.useState(0)
+			const [flipped, setFlipped] = React.useState(false)
+
+			const onChange = event => {
+				setAmount(event.target.value)
+			}
+			const reset = () => {
+				setAmount(0)
+			}
+			const onFlip = () => {
+				setFlipped(current => !current)
+				reset()
+			}
+			return (
+				<div className='converter'>
+					<h3 className='title'>Minutes To Hours</h3>
+					<label htmlFor='amount'>Minutes</label>
+					<input
+						id='minutes'
+						placeholder='Minutes'
+						type='number'
+						value={flipped ? amount : Math.round(amount * 60)}
+						onChange={onChange}
+						disabled={!flipped}
+					/>
+
+					<label htmlFor='hours'>Hours</label>
+					<input
+						id='hours'
+						placeholder='Hours'
+						type='number'
+						value={flipped ? Math.round(amount / 60) : amount}
+						disabled={flipped}
+						onChange={onChange}
+					/>
+
+					<div className='userBtnWrap'>
+						<button className='userBtn' onClick={reset}>
+							Reset
+						</button>
+						<button className='userBtn' onClick={onFlip}>
+							Flip
+						</button>
+					</div>
+				</div>
+			)
+		}
+		function KmToMiles() {
+			const [amount, setAmount] = React.useState(0)
+			const [flipped, setFlipped] = React.useState(false)
+			const miles = 0.6213
+
+			console.log(flipped)
+
+			const onChange = event => {
+				setAmount(event.target.value)
+			}
+			const reset = () => {
+				setAmount(0)
+			}
+
+			const onFlip = () => {
+				setFlipped(current => !current)
+				setAmount(0)
+			}
+			return (
+				//0.621371  = 1km
+				<div className='converter'>
+					<h3 className='title'>KM to MILES</h3>
+					<label htmlFor='amount'>Kilometers</label>
+					<input
+						id='minutes'
+						placeholder='Minutes'
+						type='number'
+						value={flipped ? amount * miles : amount}
+						onChange={onChange}
+						disabled={flipped}
+					/>
+					<label htmlFor='hours'>Miles</label>
+					<input
+						id='hours'
+						placeholder='Hours'
+						type='number'
+						value={flipped ? amount : amount / miles}
+						disabled={!flipped}
+						onChange={onChange}
+					/>
+
+					<div className='userBtnWrap'>
+						<button className='userBtn' onClick={reset}>
+							Reset
+						</button>
+						<button className='userBtn' onClick={onFlip}>
+							Flip
+						</button>
+					</div>
+				</div>
+			)
+		}
+		const root = document.getElementById('root')
+		function App() {
+			const [index, setIndex] = React.useState('none')
+
+			const onSelect = event => {
+				setIndex(event.target.value)
+			}
+			return (
+				<div className='converter'>
+					<h3 className='title'>Unit Converter</h3>
+
+					<select value={index} onChange={onSelect}>
+						<option value='none'>Select your Unit</option>
+						<option value='0'>Minutes & Hours</option>
+						<option value='1'>Km & Miles</option>
+					</select>
+					<hr />
+					{index === 'none' ? 'Please Select your Unit' : null}
+					{index === '0' ? <MinutesToHours /> : null}
+					{index === '1' ? <KmToMiles /> : null}
+				</div>
+			)
+		}
+		ReactDOM.render(<App />, root)
+	</script>
+</html>

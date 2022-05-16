@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="root"></div>
+	</body>
+
+	<script
+		crossorigin
+		src="https://unpkg.com/react@18/umd/react.production.min.js"
+	></script>
+	<script
+		crossorigin
+		src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+	></script>
+	<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+		body {
+			letter-spacing: -0.02em;
+		}
+		.converter {
+			max-width: 400px;
+		}
+		label {
+			display: block;
+			text-transform: uppercase;
+			padding-bottom: 5px;
+		}
+		input {
+			border: 1px solid #ddd;
+			height: 50px;
+			line-height: 50px;
+			padding-left: 16px;
+			width: 100%;
+			border-radius: 4px;
+			appearance: none;
+		}
+		input::disabled {
+			background: #ddd;
+		}
+		input[type='number']::-webkit-inner-spin-button,
+		input[type='number']::-webkit-outer-spin-button {
+			appearance: none;
+		}
+		.userBtn {
+			width: 100%;
+			margin-top: 20px;
+			border: 1px solid orange;
+			background: orange;
+			color: white;
+			height: 50px;
+			line-height: 50px;
+			border-radius: 4px;
+		}
+		.userBtnWrap {
+			display: flex;
+			justify-content: space-between;
+		}
+		.userBtnWrap .userBtn {
+			width: 49%;
+		}
+	</style>
+	<script type="text/babel">
+		const root = document.getElementById('root')
+		function App() {
+			const [amount, setAmount] = React.useState(0)
+			const [flipped, setFlipped] = React.useState(false)
+
+			const onChange = event => {
+				setAmount(event.target.value)
+			}
+			const reset = () => {
+				setAmount(0)
+			}
+			const onFlip = () => {
+				setFlipped(current => !current)
+				reset()
+			}
+			return (
+				<div className='converter'>
+					<h3 className='title'>Unit Converter</h3>
+					<label htmlFor='amount'>Minutes</label>
+					<input
+						id='minutes'
+						placeholder='Minutes'
+						type='number'
+						value={flipped ? amount : Math.round(amount * 60)}
+						onChange={onChange}
+						disabled={!flipped}
+					/>
+
+					<h4>You want to Convert </h4>
+					<label htmlFor='hours'>Hours</label>
+					<input
+						id='hours'
+						placeholder='Hours'
+						type='number'
+						value={flipped ? Math.round(amount / 60) : amount}
+						disabled={flipped}
+						onChange={onChange}
+					/>
+
+					<div className='userBtnWrap'>
+						<button className='userBtn' onClick={reset}>
+							Reset
+						</button>
+						<button className='userBtn' onClick={onFlip}>
+							Flip
+						</button>
+					</div>
+				</div>
+			)
+		}
+		ReactDOM.render(<App />, root)
+	</script>
+</html>

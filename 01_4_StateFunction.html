@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="root"></div>
+	</body>
+
+	<script
+		crossorigin
+		src="https://unpkg.com/react@18/umd/react.production.min.js"
+	></script>
+	<script
+		crossorigin
+		src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+	></script>
+	<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+	<script type="text/babel">
+		const root = document.getElementById('root')
+		function App() {
+			const [value, setValue] = React.useState(0)
+			console.log(React.useState(0))
+
+			const onClick = () => {
+				//setvalue(value + 1)
+				//위에서 했던 방법은 setValue(변경할 값)을 넣어 직접 할당하는 방법이다.  이런 형태로 값을 변경 하는 경우에는 예상치 못한 곳에서 값이 업데이트 되는 경우 원하는 값으로 변경이 안 될 수도 있다.  → 이전 값을 활용해서 상태 변경하기
+				setCounter(current => current + 1)
+			}
+			return (
+				<div>
+					<h3>{value}</h3>
+					<button onClick={onClick}>Click me</button>
+				</div>
+			)
+		}
+		ReactDOM.render(<App />, root)
+	</script>
+</html>
